@@ -90,3 +90,30 @@ sudo rabbitmqctl status
 # 📥 5. Clone o repositório
 git clone https://github.com/alanweb7/projeto-bayles.git
 cd projeto-bayles
+
+```
+
+## 📨 Endpoint: Envio de Mensagens
+
+### ➤ Rota
+```http
+POST /api/messages/send
+
+```
+## 📥 Payload de Entrada (JSON)
+
+```bash
+{
+  "queue": "nome_da_fila",
+  "message": {
+    "id": "unique_message_id",
+    "content": "conteúdo da mensagem",
+    "timestamp": "2024-01-15T10:30:00Z",
+    "metadata": {
+      "sender": "service_name",
+      "priority": "high"
+    }
+  }
+}
+
+```
