@@ -124,7 +124,7 @@ sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
 
 # Clone o projeto
-git clone https://github.com/seu-usuario/projeto-bayles.git
+git clone https://github.com/alanweb7/projeto-bayles.git
 cd projeto-bayles
 
 # Instale dependências
