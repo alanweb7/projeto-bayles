@@ -117,3 +117,15 @@ POST /api/messages/send
 }
 
 ```
+
+### 📄 Estrutura do Payload
+
+| Campo                        | Tipo                             | Obrigatório | Descrição                             |
+|-----------------------------|----------------------------------|-------------|----------------------------------------|
+| `queue`                     | string                           | ✅           | Nome da fila RabbitMQ                  |
+| `message.id`                | string                           | ✅           | ID único da mensagem                   |
+| `message.content`           | string                           | ✅           | Conteúdo da mensagem                   |
+| `message.timestamp`         | string (ISO 8601)                | ✅           | Data/hora da criação da mensagem       |
+| `message.metadata.sender`   | string                           | ✅           | Nome do serviço que gerou a mensagem   |
+| `message.metadata.priority` | string (`high`, `medium`, `low`) | ✅           | Prioridade da mensagem                 |
+
