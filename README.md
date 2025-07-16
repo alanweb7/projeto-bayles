@@ -52,3 +52,41 @@ projeto-bayles/
 └── README.md
 
 ```
+
+## 🚀 Instalação na VPS (Ubuntu 20.04+)
+
+Siga os passos abaixo para clonar, instalar e executar o projeto em uma VPS com Ubuntu (ou similar):
+
+### ✅ Pré-requisitos
+
+- Node.js 16 ou superior
+- RabbitMQ instalado (localmente ou via Docker)
+- Git instalado
+- Acesso SSH com permissões `sudo`
+
+---
+
+### 🧱 1. Acesse sua VPS
+
+```bash
+ssh usuario@ip-da-sua-vps
+
+# 🔧 2. Instale pacotes essenciais
+
+sudo apt update && sudo apt install -y git curl build-essential
+
+# 📦 3. Instale o Node.js (v16+)
+
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt install -y nodejs
+node -v && npm -v
+
+# 🐰 4. Instale o RabbitMQ (caso use localmente)
+sudo apt install -y rabbitmq-server
+sudo systemctl enable rabbitmq-server
+sudo systemctl start rabbitmq-server
+sudo rabbitmqctl status
+
+# 📥 5. Clone o repositório
+git clone https://github.com/seu-usuario/projeto-bayles.git
+cd projeto-bayles
