@@ -123,6 +123,25 @@ sudo apt install -y rabbitmq-server
 sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
 
+# 📦 Instalar Redis (caso local)
+# Instale o cliente Redis para Node.js
+npm install redis
+
+# Instale as ferramentas de linha de comando
+sudo apt update
+sudo apt install -y redis-tools redis-server
+
+# Inicie o servidor Redis
+sudo systemctl start redis-server
+
+# (Opcional) Ative o Redis na inicialização do sistema
+sudo systemctl enable redis-server
+
+# Verifique se está funcionando
+redis-cli ping
+# Esperado: PONG
+
+
 # Clone o projeto
 git clone https://github.com/alanweb7/projeto-bayles.git
 cd projeto-bayles
