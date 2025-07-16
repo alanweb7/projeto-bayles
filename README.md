@@ -115,7 +115,7 @@ ssh usuario@ip-da-vps
 sudo apt update && sudo apt install -y git curl build-essential
 
 # Instale Node.js 16+
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
 
 # Instale RabbitMQ (caso local)
