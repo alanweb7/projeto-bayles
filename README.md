@@ -88,5 +88,5 @@ sudo systemctl start rabbitmq-server
 sudo rabbitmqctl status
 
 # 📥 5. Clone o repositório
-git clone https://github.com/seu-usuario/projeto-bayles.git
+git clone https://github.com/alanweb7/projeto-bayles.git
 cd projeto-bayles
