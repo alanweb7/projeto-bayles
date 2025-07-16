@@ -34,3 +34,18 @@ A aplicação expõe uma **API REST** para envio de mensagens via WhatsApp, util
 
 ## 🗂 Estrutura do Projeto
 
+projeto-bayles/
+├── src/
+│ ├── controllers/ # Lógica dos endpoints REST
+│ ├── services/ # Integrações com Baileys e RabbitMQ
+│ ├── middleware/ # Validações, erros, rate limit
+│ ├── config/ # Conexões e variáveis de ambiente
+│ ├── utils/ # Helpers e logs
+│ └── app.js # Inicialização do Express
+├── tests/ # Testes unitários e de integração
+├── docker/ # Arquivos Docker (opcional)
+├── docs/ # Documentação da API
+├── .env.example # Exemplo de variáveis de ambiente
+├── .gitignore
+├── package.json
+└── README.md
