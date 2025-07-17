@@ -225,7 +225,7 @@ O processamento da fila é feito de forma assíncrona por um consumer que utiliz
 }
 ```
 
-# 📡 API de Monitoramento de Filas RabbitMQ
+# 📡 API de Monitoramento de Filas RabbitMQ.
 
 Este serviço expõe um endpoint HTTP para consultar o status de uma ou mais filas no RabbitMQ, utilizando o canal AMQP e (opcionalmente) a API de gerenciamento do RabbitMQ.
 
