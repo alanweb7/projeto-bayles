@@ -1,19 +1,25 @@
-// src/services/baileysService.js
-const path = require('path');
+// tests/unit/baylesService.test.js
 
-jest.mock('@whiskeysockets/baileys', () => {
-  return {
-    useSingleFileAuthState: jest.fn(() => ({
-      state: {},
-      saveState: jest.fn()
-    })),
-    // ... outros exports que usar
-  };
+const { sendMessage, startBaileys } = require('../../src/services/baileysService');
+
+jest.mock('@whiskeysockets/baileys', () => ({
+  useSingleFileAuthState: jest.fn(() => ({
+    state: {},
+    saveState: jest.fn()
+  })),
+  default: jest.fn(() => ({
+    ev: {
+      on: jest.fn()
+    },
+    sendMessage: jest.fn()
+  })),
+  DisconnectReason: {
+    loggedOut: 'loggedOut'
+  }
+}));
+
+describe('Baileys Service', () => {
+  it('deve iniciar sem lançar erro', () => {
+    expect(() => startBaileys()).not.toThrow();
+  });
 });
-
-const { useSingleFileAuthState } = require('@whiskeysockets/baileys');
-
-const SESSION_FILE = path.resolve(__dirname, '../../session.json');
-const { state, saveState } = useSingleFileAuthState(SESSION_FILE);
-
-// agora use state e saveState normalmente nos testes
