@@ -4,7 +4,7 @@ const { unlinkSync } = require('fs');
 const { Boom } = require('@hapi/boom');
 const path = require('path');
 
-const logger = require('../utils/logger'); // Certifique-se de que esse logger exista
+const logger = require('../../src/utils/logger');
 
 const SESSION_FILE = path.resolve(__dirname, '../../session.json');
 const { state, saveState } = useSingleFileAuthState(SESSION_FILE);
