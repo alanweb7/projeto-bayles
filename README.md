@@ -50,7 +50,7 @@ sudo apt update && sudo apt install -y git curl build-essential
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
 
-# rerinicie o servidor
+# reinicie o servidor
 reboot now
 
 ```
@@ -80,6 +80,7 @@ docker --version
 docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 
 ```
+---
 
 # 📦 Instalar Redis
 ```bash
@@ -97,7 +98,9 @@ redis-cli ping
 # Esperado: PONG
  ```
 
-# Clone o projeto
+---
+
+# 📦 📦 Clone o projeto
 ```bash
 git clone https://github.com/alanweb7/projeto-bayles.git
 cd projeto-bayles
