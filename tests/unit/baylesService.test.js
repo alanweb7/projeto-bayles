@@ -7,12 +7,21 @@ jest.mock('@whiskeysockets/baileys', () => ({
     state: {},
     saveCreds: jest.fn()
   })),
-  makeWASocket: jest.fn(() => ({
-    ev: { on: jest.fn() },
-    sendMessage: jest.fn(),
-    logout: jest.fn()
-  }))
+  fetchLatestBaileysVersion: jest.fn(() => ({
+    version: [2, 2323, 4], // qualquer versão dummy
+    isLatest: true
+  })),
+  default: {
+    makeWASocket: jest.fn(() => ({
+      ev: {
+        on: jest.fn(),
+      },
+      waitForConnectionUpdate: jest.fn(),
+      ws: { close: jest.fn() },
+    }))
+  }
 }));
+
 
 
 describe('Baileys Service', () => {
