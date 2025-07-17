@@ -29,6 +29,8 @@ async function startBaileys() {
 
       if (qr) {
         logger.info('QR Code gerado. Escaneie com o WhatsApp para conectar.');
+        logger.info('QR Code');
+        logger.info(qr);
       }
 
       if (connection === 'close') {
