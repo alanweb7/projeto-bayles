@@ -34,7 +34,6 @@ async function sendToQueue(queue, message) {
 // Exporta a função `sendToQueue` para ser utilizada em outras partes do sistema
 module.exports = { sendToQueue };
 
-
 /**
  * Função que retorna o status de várias filas do RabbitMQ.
  * @param {Array} queueNames - Lista com os nomes das filas a serem verificadas.
