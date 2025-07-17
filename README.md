@@ -117,12 +117,22 @@ sudo apt update && sudo apt install -y git curl build-essential
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
 
-# Instale RabbitMQ (caso local)
-sudo apt install -y rabbitmq-server
-sudo systemctl enable rabbitmq-server
-sudo systemctl start rabbitmq-server
-rabbitmq-plugins enable rabbitmq_management
-sudo systemctl restart rabbitmq-server
+# Instalando Docker no Ubuntu (via apt)
+sudo apt update
+sudo apt install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+
+# Verifique se o Docker está funcionando:
+docker --version
+
+# Execute o comando para rodar o RabbitMQ com management:
+# sudo apt install -y rabbitmq-server
+# sudo systemctl enable rabbitmq-server
+# sudo systemctl start rabbitmq-server
+# rabbitmq-plugins enable rabbitmq_management
+# sudo systemctl restart rabbitmq-servergit
+docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 
 # 📦 Instalar Redis (caso local)
 # Instale o cliente Redis para Node.js
