@@ -15,8 +15,6 @@ A aplicação expõe uma **API REST** para envio de mensagens via WhatsApp, util
 - Integrar **RabbitMQ** com **Node.js**
 - Utilizar **Baileys** para WhatsApp Messaging
 - Criar endpoints RESTful com **Express**
-- Implementar boas práticas: validação, erros, segurança
-- Documentar API e código de forma clara
 
 ---
 
@@ -27,11 +25,7 @@ A aplicação expõe uma **API REST** para envio de mensagens via WhatsApp, util
 - Baileys
 - RabbitMQ
 - amqplib
-- dotenv
-- Joi
-- CORS & Helmet
-- Jest + Supertest (para testes)
-- Docker e Docker Compose (opcional)
+- Docker
 
 ---
 
@@ -40,30 +34,44 @@ A aplicação expõe uma **API REST** para envio de mensagens via WhatsApp, util
 ### ✅ Pré-requisitos
 
 - Node.js 16+
+- Docker
 - RabbitMQ instalado (Docker)
 - Git
 
 ### 🔧 Passo a passo
 
-```bash
 
-# Instale pacotes necessários
+### Instale pacotes necessários
+
+```bash
 sudo apt update && sudo apt install -y git curl build-essential
 
 # Instale Node.js 16+
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt install -y nodejs
 
-# Instalando Docker no Ubuntu (via apt)
-sudo apt update
-sudo apt install -y docker.io
-sudo systemctl enable docker
+# rerinicie o servidor
+reboot now
+
+```
+## Instalando Docker no Ubuntu (via apt)
+
+```bash
+sudo apt update && \
+sudo apt install -y docker.io && \
+sudo systemctl enable docker && \
 sudo systemctl start docker
+```
 
-# Verifique se o Docker está funcionando:
+## Verifique se o Docker está funcionando:
+
+```bash
 docker --version
+```
 
-# Execute o comando para rodar o RabbitMQ com management:
+## Execute o comando para rodar o RabbitMQ com management:
+
+```bash
 # sudo apt install -y rabbitmq-server
 # sudo systemctl enable rabbitmq-server
 # sudo systemctl start rabbitmq-server
@@ -71,26 +79,26 @@ docker --version
 # sudo systemctl restart rabbitmq-servergit
 docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 
-# 📦 Instalar Redis (caso local)
+```
+
+# 📦 Instalar Redis
+```bash
 # Instale o cliente Redis para Node.js
-npm install redis
+npm install redis && \
+sudo apt install -y redis-tools redis-server && \
+sudo systemctl start redis-server && \
+sudo systemctl enable redis-server 
 
-# Instale as ferramentas de linha de comando
-sudo apt update
-sudo apt install -y redis-tools redis-server
+```
 
-# Inicie o servidor Redis
-sudo systemctl start redis-server
-
-# (Opcional) Ative o Redis na inicialização do sistema
-sudo systemctl enable redis-server
-
-# Verifique se está funcionando
+## Verifique se o Redis está funcionando
+```bash
 redis-cli ping
 # Esperado: PONG
-
+ ```
 
 # Clone o projeto
+```bash
 git clone https://github.com/alanweb7/projeto-bayles.git
 cd projeto-bayles
 
