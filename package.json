@@ -28,6 +28,7 @@
     "cors": "^2.8.5",
     "helmet": "^6.0.0",
     "dotenv": "^16.0.0",
+    "winston": "^3.8.2",
     "joi": "^17.6.0"
   },
   "devDependencies": {
