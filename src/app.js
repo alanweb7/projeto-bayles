@@ -46,6 +46,12 @@ app.post('/api/messages/send', validateMessage, sendMessage);
 // Define a porta que o servidor vai escutar (pega do .env ou usa 3000 por padrão)
 const PORT = process.env.PORT || 3000;
 
+// Controlador responsável por processar o RECEBIMENTO de mensagens
+const { receiveMessages } = require('./controllers/messageReceiverController');
+
+app.get('/api/messages/receive/:queueName', receiveMessages);
+
+
 // Inicia o servidor e exibe mensagem no console
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
