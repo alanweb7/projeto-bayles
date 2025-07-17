@@ -8,7 +8,7 @@ async function queueStatus(req, res) {
     console.error('Erro no canal RabbitMQ:', err.message);
   });
 
-  const queueNames = ['fila_exemplo']; // <- pode parametrizar depois
+  const queueNames = ['mensagens']; // <- pode parametrizar depois
   const queueStatuses = [];
 
   for (const name of queueNames) {
