@@ -235,7 +235,6 @@ O processamento da fila é feito de forma assíncrona por um consumer que utiliz
 npm test
 ```
 
-
 # 📡 API de Monitoramento de Filas RabbitMQ
 
 Este serviço expõe um endpoint HTTP para consultar o status de uma ou mais filas no RabbitMQ, utilizando o canal AMQP e (opcionalmente) a API de gerenciamento do RabbitMQ.
@@ -254,7 +253,7 @@ GET /api/queues/status
 
 | Parâmetro | Descrição |
 |-----------|-----------|
-| `queues`  | (opcional) Lista separada por vírgulas com os nomes das filas a consultar. Omitir o parâmetro para retornar todas as filas disponíveis via API de gerenciamento do RabbitMQ. |
+| `queues`  | (opcional) Lista separada por vírgulas com os nomes das filas a consultar. Omitir o parâmetro para retornar todas as filas disponíveis. |
 
 ---
 
@@ -296,9 +295,3 @@ GET /api/queues/status
   "timestamp": "2025-07-17T14:00:00.000Z"
 }
 ```
-
----
-
-✅ Requer que o plugin de gerenciamento do RabbitMQ esteja ativo para listar todas as filas.
-
----
