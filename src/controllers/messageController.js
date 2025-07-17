@@ -8,7 +8,7 @@ async function sendMessage(req, res) {
 
     let messageId = message.id;
 
-    if (!messageId) {
+    if (messageId === 'rand') {
       messageId = await generateUniqueMessageId(isUniqueId);
       message.id = messageId;
     } else {

@@ -37,6 +37,7 @@ A aplicação expõe uma **API REST** para envio de mensagens via WhatsApp, util
 - Docker
 - RabbitMQ instalado (Docker)
 - Git
+- UUID
 
 ### 🔧 Passo a passo
 
@@ -54,6 +55,13 @@ sudo apt install -y nodejs
 reboot now
 
 ```
+## 📦 Instalação do uuid
+
+```bash
+npm install uuid
+
+```
+
 ## Instalando Docker no Ubuntu
 
 ```bash
