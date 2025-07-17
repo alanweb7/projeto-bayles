@@ -1,6 +1,6 @@
 // tests/unit/baylesService.test.js
 
-const { sendMessage, startBaileys } = require('../../src/services/baileysService');
+const { sendMessage, startBaileys } = require('../../src/services/baylesService');
 
 jest.mock('@whiskeysockets/baileys', () => ({
   useSingleFileAuthState: jest.fn(() => ({
