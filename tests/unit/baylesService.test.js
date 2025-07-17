@@ -3,20 +3,17 @@
 const { sendMessage, startBaileys } = require('../../src/services/baylesService');
 
 jest.mock('@whiskeysockets/baileys', () => ({
-  useSingleFileAuthState: jest.fn(() => ({
+  useMultiFileAuthState: jest.fn(() => ({
     state: {},
-    saveState: jest.fn()
+    saveCreds: jest.fn()
   })),
-  default: jest.fn(() => ({
-    ev: {
-      on: jest.fn()
-    },
-    sendMessage: jest.fn()
-  })),
-  DisconnectReason: {
-    loggedOut: 'loggedOut'
-  }
+  makeWASocket: jest.fn(() => ({
+    ev: { on: jest.fn() },
+    sendMessage: jest.fn(),
+    logout: jest.fn()
+  }))
 }));
+
 
 describe('Baileys Service', () => {
   it('deve iniciar sem lançar erro', () => {
