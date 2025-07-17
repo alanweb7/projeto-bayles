@@ -53,7 +53,7 @@ app.get('/api/messages/receive/:queueName', receiveMessages);
 
 
 // Endpoint de Status das Filas
-const { queueStatus } = require('../controllers/queueController');
+const { queueStatus } = require('./controllers/queueController');
 
 app.get('/queues/status', queueStatus);
 
