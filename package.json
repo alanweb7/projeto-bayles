@@ -19,7 +19,7 @@
   "author": "Alan Silva",
   "license": "MIT",
   "dependencies": {
-    "@whiskeysockets/baileys": "^6.7.0",
+    "@whiskeysockets/baileys": "^6.7.18",
     "express": "^4.18.0",
     "express-validator": "^6.14.0",
     "qrcode": "^1.5.0",
