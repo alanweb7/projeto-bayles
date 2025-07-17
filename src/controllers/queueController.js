@@ -2,11 +2,11 @@
 const { connectRabbitMQ } = require('../config/rabbitmq');
 const axios = require('axios');
 
-
+// Lista todas as filas via API HTTP do Management Plugin
 async function listAllQueues() {
   const {
     RABBITMQ_HOST,
-    RABBITMQ_PORT_MANAGEMENT, // Adicione uma variável separada para a porta HTTP!
+    RABBITMQ_PORT_MANAGEMENT,
     RABBITMQ_USER,
     RABBITMQ_PASS
   } = process.env;
@@ -42,7 +42,7 @@ async function queueStatus(req, res) {
     if (req.query.queues) {
       const requested = req.query.queues.trim().toLowerCase();
       if (requested === 'all') {
-        queueNames = await listAllQueues(); // <- Lista todas as filas via HTTP API
+        queueNames = await listAllQueues(); // Chamada correta aqui dentro
       } else {
         queueNames = requested.split(',');
       }
