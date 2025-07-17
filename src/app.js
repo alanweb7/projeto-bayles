@@ -14,8 +14,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 
 const { validateMessage } = require('./middleware/validation');
-const { sendMessage } = require('./controllers/messageController');
-const { receiveMessages } = require('./controllers/messageReceiverController');
+const { sendMessage, receiveMessages } = require('./controllers/messageController');
 const { queueStatus } = require('./controllers/queueController'); // <- verifique se está exportando certo!
 
 const app = express();
