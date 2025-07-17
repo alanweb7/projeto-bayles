@@ -27,17 +27,19 @@ jest.mock('@whiskeysockets/baileys', () => {
   };
 });
 
+const logger = require('../../src/utils/logger');
 const { startBaileys } = require('../../src/services/baylesService');
 
 describe('Baileys QR Code', () => {
   it('deve gerar QR code no terminal', async () => {
-    // Mock console.log para capturar a saída
-    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const logSpy = jest.spyOn(logger, 'info').mockImplementation(() => {});
 
     await startBaileys();
 
-    // Dá um tempo para o setTimeout interno disparar
-    await new Promise((r) => setTimeout(r, 20));
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    // Debug opcional:
+    console.log('Calls:', logSpy.mock.calls);
 
     expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('QR Code gerado'));
 
