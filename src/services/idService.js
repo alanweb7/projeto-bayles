@@ -1,12 +1,11 @@
 /**
  * Este módulo serve para garantir que cada mensagem enviada tenha um ID único. 
  * Ele usa o Redis como cache temporário para controlar quais IDs já foram usados, 
- * expirando automaticamente após 24 horas. Isso evita reprocessamentos acidentais 
- * ou mensagens duplicadas na fila.
+ * expirando automaticamente após 24 horas.
+ * Isso evita reprocessamentos acidentais ou mensagens duplicadas na fila.
  */
 
-// Importa a instância do Redis configurada no arquivo ../config/redis
-// const redis = require('../config/redis');
+// Importa a instância do Redis configurada no arquivo ../config/database
 const database = require('../config/database');
 
 // Define o tempo de expiração dos IDs armazenados (24 horas em segundos)
@@ -26,6 +25,5 @@ async function markIdAsUsed(id) {
   await database.setEx(`msgid:${id}`, ID_EXPIRATION_SECONDS, '1');
 }
 
-// Exporta as duas funções para serem usadas em outras partes da aplicação
 module.exports = { isUniqueId, markIdAsUsed };
 
