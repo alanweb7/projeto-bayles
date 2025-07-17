@@ -1,15 +1,30 @@
 // controllers/queueController.js
 const { connectRabbitMQ } = require('../config/rabbitmq');
+const axios = require('axios');
 
-// Função auxiliar para buscar todas as filas disponíveis no RabbitMQ
-async function listAllQueues(channel) {
-  const response = await channel.connection.request({
-    // Requisição interna ao RabbitMQ via método HTTP AMQP (requires management plugin)
-    method: 'GET',
-    path: '/api/queues',
-  });
+async function listAllQueues() {
+  const {
+    RABBITMQ_HOST,
+    RABBITMQ_PORT,
+    RABBITMQ_USER,
+    RABBITMQ_PASS
+  } = process.env;
 
-  return response.map((q) => q.name);
+  const managementUrl = `http://${RABBITMQ_HOST}:${RABBITMQ_PORT}/api/queues`;
+
+  try {
+    const response = await axios.get(managementUrl, {
+      auth: {
+        username: RABBITMQ_USER,
+        password: RABBITMQ_PASS
+      }
+    });
+
+    return response.data.map(q => q.name);
+  } catch (error) {
+    console.error('Erro ao buscar todas as filas via Management Plugin:', error.message);
+    throw error;
+  }
 }
 
 async function queueStatus(req, res) {
@@ -21,14 +36,17 @@ async function queueStatus(req, res) {
       console.error('Erro no canal RabbitMQ:', err.message);
     });
 
-    // Pega os nomes via query string: ?queues=fila1,fila2,fila3
     let queueNames = [];
 
     if (req.query.queues) {
-      queueNames = req.query.queues.split(',');
+      const requested = req.query.queues.trim().toLowerCase();
+      if (requested === 'all') {
+        queueNames = await listAllQueues(); // <- Lista todas as filas via HTTP API
+      } else {
+        queueNames = requested.split(',');
+      }
     } else {
-      // Caso não seja informado, usa um fallback de filas padrão OU lista todas (se estiver usando o plugin de gerenciamento)
-      queueNames = ['mensagens']; // ou: await listAllQueues(channel);
+      queueNames = ['mensagens']; // fallback
     }
 
     const queueStatuses = [];
