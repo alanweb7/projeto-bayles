@@ -154,7 +154,7 @@ O processamento da fila é feito de forma assíncrona por um consumer.
 {
   "queue": "nome_da_fila",
   "message": {
-    "id": "unique_message_id",
+    "id": "unique_message_id", //:uniq | rand (gerar uniq aleatório)
     "content": "conteúdo da mensagem",
     "timestamp": "2024-01-15T10:30:00Z",
     "metadata": {
@@ -170,7 +170,7 @@ O processamento da fila é feito de forma assíncrona por um consumer.
 | Campo                       | Tipo                             | Obrigatório | Descrição                            |
 | --------------------------- | -------------------------------- | ----------- | ------------------------------------ |
 | `queue`                     | string                           | ✅           | Nome da fila RabbitMQ                |
-| `message.id`                | string                           | ✅           | ID único da mensagem                 |
+| `message.id`                | string                           | ✅           | ID único ou 'rand'                  |
 | `message.content`           | string                           | ✅           | Conteúdo da mensagem                 |
 | `message.timestamp`         | string (ISO 8601)                | ✅           | Data/hora da criação da mensagem     |
 | `message.metadata.sender`   | string                           | ✅           | Nome do serviço que gerou a mensagem |
