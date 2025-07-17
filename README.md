@@ -58,8 +58,9 @@ reboot now
 ## 📦 Instalação do uuid
 
 ```bash
+sudo apt update
 npm install uuid
-
+reboot now
 ```
 
 ## Instalando Docker no Ubuntu

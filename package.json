@@ -12,7 +12,6 @@
     "nodejs",
     "express",
     "rabbitmq",
-    "baileys",
     "mensageria",
     "whatsapp",
     "microservices"
@@ -20,10 +19,9 @@
   "author": "Alan Silva",
   "license": "MIT",
   "dependencies": {
-    "@whiskeysockets/baileys": "github:WhiskeySockets/Baileys",
+    "@whiskeysockets/baileys": "^6.5.0",
     "express": "^4.18.0",
     "express-validator": "^6.14.0",
-    "baileys": "^6.6.0",
     "qrcode": "^1.5.0",
     "qrcode-terminal": "^0.12.0",
     "amqplib": "^0.10.3",

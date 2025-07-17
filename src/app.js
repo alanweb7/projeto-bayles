@@ -1,9 +1,8 @@
 /**
- * Esse código configura seu servidor Node.js com 
+ * Configura seu servidor Node.js com 
  * Express e define uma única rota POST que:
  * Valida a mensagem;
  * Envia para a fila via RabbitMQ (controlador sendMessage);
- * Usa boas práticas com helmet, cors e express.json().
  */
 
 // Carrega variáveis de ambiente do arquivo .env para process.env
