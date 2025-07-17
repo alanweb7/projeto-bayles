@@ -1,18 +1,18 @@
 
-# Projeto Bayles - Integração com RabbitMQ
+# Projeto Baileys - Integração com RabbitMQ
 
-Este projeto implementa a integração com RabbitMQ utilizando a biblioteca `bayles`. A seguir está a estrutura do projeto, responsabilidades de cada parte, e os principais pontos implementados.
+Este projeto implementa a integração com RabbitMQ utilizando a biblioteca `baileys`. A seguir está a estrutura do projeto, responsabilidades de cada parte, e os principais pontos implementados.
 
 ## Estrutura do Projeto
 
 ```
-projeto-bayles/
+projeto-baileys/
 ├── src/
 │   ├── controllers/
 │   │   ├── messageController.js       # Responsável por envio de mensagens para filas RabbitMQ
 │   │   └── queueController.js         # Responsável por obter status das filas via API e Management Plugin
 │   ├── services/
-│   │   ├── baylesService.js           # Inicializa e exporta uma instância do Bayles configurado
+│   │   ├── baileysService.js           # Inicializa e exporta uma instância do Baileys configurado
 │   │   └── rabbitMQService.js         # Serviços auxiliares para comunicação com RabbitMQ
 │   ├── middleware/
 │   │   ├── validation.js              # Middleware para validações de entrada
@@ -40,12 +40,12 @@ projeto-bayles/
 
 ## Funcionalidades Implementadas
 
-### ✅ Conexão com RabbitMQ usando Bayles
-- Configuração em `services/baylesService.js`
+### ✅ Conexão com RabbitMQ usando Baileys
+- Configuração em `services/baileysService.js`
 - Usa variáveis de ambiente para `host`, `port`, `user`, `pass`, `vhost`, etc.
 
 ### ✅ Envio de mensagens
-- `messageController.js` utiliza o Bayles para enviar mensagens para filas nomeadas.
+- `messageController.js` utiliza o Baileys para enviar mensagens para filas nomeadas.
 
 ### ✅ Status das Filas
 - API `GET /api/queues/status` com suporte a:
@@ -74,12 +74,12 @@ projeto-bayles/
 
 ---
 
-© Projeto Bayles – Monitoramento e Integração RabbitMQ
+© Projeto Baileys – Monitoramento e Integração RabbitMQ
 
 
 ## Uso da API de Status de Filas
 
-A API permite consultar o status das filas monitoradas pelo sistema Bayles.
+A API permite consultar o status das filas monitoradas pelo sistema Baileys.
 
 ### Rotas disponíveis
 

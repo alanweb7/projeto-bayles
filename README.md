@@ -1,4 +1,4 @@
-# 📬 Projeto Bayles – Gateway de Mensagens com Node.js, Baileys e RabbitMQ
+# 📬 Projeto Baileys – Gateway de Mensagens com Node.js, Baileys e RabbitMQ
 
 Este projeto é um gateway de mensageria assíncrona desenvolvido com Node.js, utilizando a biblioteca **Baileys** para envio e recebimento de mensagens para **RabbitMQ** como broker de mensagens.
 
@@ -105,8 +105,8 @@ redis-cli ping
 
 ## 📦 📦 Clone e configure o projeto
 ```bash
-git clone https://github.com/alanweb7/projeto-bayles.git
-cd projeto-bayles
+git clone https://github.com/alanweb7/projeto-baileys.git
+cd projeto-baileys
 
 # Instale dependências
 npm install
@@ -125,7 +125,7 @@ npm start
 
 ```bash
 npm install -g pm2
-pm2 start src/app.js --name projeto-bayles
+pm2 start src/app.js --name projeto-baileys
 pm2 save
 pm2 startup
 ```
@@ -255,7 +255,7 @@ GET /api/queues/status
 ## 📂 Estrutura do Projeto
 
 ```bash
-projeto-bayles/
+projeto-baileys/
 ├── src/
 │   ├── controllers/      
 │   ├── services/             

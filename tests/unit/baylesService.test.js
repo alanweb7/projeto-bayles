@@ -1,4 +1,4 @@
-// tests/unit/baylesService.test.js
+// tests/unit/baileysService.test.js
 
 const P = require('pino');
 
@@ -28,7 +28,7 @@ jest.mock('@whiskeysockets/baileys', () => {
 });
 
 const logger = require('../../src/utils/logger');
-const { startBaileys } = require('../../src/services/baylesService');
+const { startBaileys } = require('../../src/services/baileysService');
 
 describe('Baileys QR Code', () => {
   it('deve gerar QR code no terminal', async () => {
