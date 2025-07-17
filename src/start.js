@@ -18,7 +18,7 @@ async function startBaileys() {
       console.log('📱 Escaneie o QR Code com o WhatsApp:');
       qrcode.generate(qr, { small: true });
     }
-
+ 
     if (connection === 'open') {
       console.log('✅ Conectado ao WhatsApp com sucesso!');
     }
