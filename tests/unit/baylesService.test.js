@@ -1,21 +1,46 @@
-const { Connection } = require('../../src/services/baylesService');
-const makeWaSocket = require('@whiskeysockets/baileys').default;
+// tests/unit/baylesService.test.js
+
+const P = require('pino');
 
 jest.mock('@whiskeysockets/baileys', () => {
   return {
-    __esModule: true,
-    default: jest.fn(), // mockando makeWaSocket como função
+    default: jest.fn(() => ({
+      ev: {
+        on: jest.fn((event, cb) => {
+          if (event === 'connection.update') {
+            // Simula a emissão do QR code
+            setTimeout(() => {
+              cb({ qr: 'FAKE_QR_CODE_STRING', connection: 'open' });
+            }, 10);
+          }
+        }),
+      },
+    })),
+    useMultiFileAuthState: jest.fn(async () => ({
+      state: {},
+      saveCreds: jest.fn(),
+    })),
+    fetchLatestBaileysVersion: jest.fn(async () => ({ version: [2, 2204, 13] })),
+    DisconnectReason: {
+      loggedOut: 401,
+    },
   };
 });
 
-describe('Baileys Service', () => {
-  it('deve iniciar sem lançar erro', async () => {
-    const fakeSocket = { user: { id: '1234' } };
-    makeWaSocket.mockReturnValue(fakeSocket);
+const { startBaileys } = require('../../src/services/baylesService');
 
-    const sock = await Connection();
+describe('Baileys QR Code', () => {
+  it('deve gerar QR code no terminal', async () => {
+    // Mock console.log para capturar a saída
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
-    expect(sock).toBe(fakeSocket);
-    expect(makeWaSocket).toHaveBeenCalledTimes(1);
+    await startBaileys();
+
+    // Dá um tempo para o setTimeout interno disparar
+    await new Promise((r) => setTimeout(r, 20));
+
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('QR code'));
+
+    logSpy.mockRestore();
   });
 });
