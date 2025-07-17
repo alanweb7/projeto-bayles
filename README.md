@@ -1,19 +1,19 @@
 # 📬 Projeto Bayles – Gateway de Mensagens com Node.js, Baileys e RabbitMQ
 
-Este projeto é um gateway de mensageria assíncrona desenvolvido com Node.js, utilizando a biblioteca **Baileys** para envio e recebimento de mensagens via WhatsApp e **RabbitMQ** como broker de mensagens.
+Este projeto é um gateway de mensageria assíncrona desenvolvido com Node.js, utilizando a biblioteca **Baileys** para envio e recebimento de mensagens para **RabbitMQ** como broker de mensagens.
 
 ---
 
 ## 📌 Visão Geral
 
-A aplicação expõe uma **API REST** para envio de mensagens via WhatsApp, utilizando uma arquitetura baseada em filas (**RabbitMQ**) para garantir comunicação assíncrona, escalável e confiável entre microserviços.
+A aplicação expõe uma **API REST** para envio de mensagens, utilizando uma arquitetura baseada em filas (**RabbitMQ**) para garantir uma comunicação assíncrona, escalável e confiável entre os microserviços.
 
 ---
 
 ## 🎯 Objetivos
 
 - Integrar **RabbitMQ** com **Node.js**
-- Utilizar **Baileys** para WhatsApp Messaging
+- Utilizar **Baileys** para gerenciar envio e consumo de mensagens de forma assíncrona
 - Criar endpoints RESTful com **Express**
 
 ---
@@ -144,7 +144,7 @@ POST /api/messages/send
 ### 📄 Descrição
 
 Recebe mensagens via HTTP e envia para uma fila RabbitMQ.\
-O processamento da fila é feito de forma assíncrona por um consumer e poderá utilizar **Baileys** para enviar via WhatsApp.
+O processamento da fila é feito de forma assíncrona por um consumer.
 
 ---
 
