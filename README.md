@@ -254,7 +254,7 @@ GET /api/queues/status
 
 | Parâmetro | Descrição |
 |-----------|-----------|
-| `queues`  | (opcional) Lista separada por vírgulas com os nomes das filas a consultar. Use `queues=all` para retornar todas as filas disponíveis via API de gerenciamento do RabbitMQ. |
+| `queues`  | (opcional) Lista separada por vírgulas com os nomes das filas a consultar. Omitir o parâmetro para retornar todas as filas disponíveis via API de gerenciamento do RabbitMQ. |
 
 ---
 
@@ -266,19 +266,12 @@ GET /api/queues/status
 GET /api/queues/status?queues=mensagens,empresas
 ```
 
-- Consultar todas as filas padrão (ex: fallback para `mensagens`):
+- Consultar **todas as filas existentes** (usando plugin de gerenciamento do RabbitMQ):
 
 ```bash
 GET /api/queues/status
 ```
 
-- Consultar **todas as filas existentes** (usando plugin de gerenciamento do RabbitMQ):
-
-```bash
-GET /api/queues/status?queues=all
-```
-
----
 
 ### 📤 Exemplo de Resposta
 
@@ -306,6 +299,6 @@ GET /api/queues/status?queues=all
 
 ---
 
-✅ Requer que o plugin de gerenciamento do RabbitMQ esteja ativo para uso da opção `queues=all`.
+✅ Requer que o plugin de gerenciamento do RabbitMQ esteja ativo para listar todas as filas.
 
 ---
