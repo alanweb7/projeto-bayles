@@ -1,6 +1,5 @@
 /**
- * ✅ Resumo:
- * Esse código cria um middleware de validação de requisições usando Joi, 
+ * Cria um middleware de validação de requisições usando Joi, 
  * garantindo que a estrutura da mensagem esteja correta antes de ser 
  * processada (evitando erros em tempo de execução ou dados malformados).
  */
