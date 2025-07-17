@@ -39,7 +39,7 @@ describe('Baileys QR Code', () => {
     // Dá um tempo para o setTimeout interno disparar
     await new Promise((r) => setTimeout(r, 20));
 
-    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('QR code'));
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('QR Code gerado'));
 
     logSpy.mockRestore();
   });
