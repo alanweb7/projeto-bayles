@@ -55,8 +55,7 @@ app.get('/api/messages/receive/:queueName', receiveMessages);
 // Endpoint de Status das Filas
 const { queueStatus } = require('./controllers/queueController');
 
-app.get('/queues/status', queueStatus);
-
+app.get('/api/queues/status', queueStatus);
 
 
 // Inicia o servidor e exibe mensagem no console
