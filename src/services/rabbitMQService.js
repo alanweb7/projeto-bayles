@@ -5,8 +5,6 @@
  */
 
 
-
-
 const { connectRabbitMQ } = require('../config/rabbitmq');
 
 async function sendToQueue(queue, message) {
@@ -25,14 +23,6 @@ async function sendToQueue(queue, message) {
   }
 }
 
-module.exports = { sendToQueue };
-
-
-/**
- * Função que retorna o status de várias filas do RabbitMQ.
- * @param {Array} queueNames - Lista com os nomes das filas a serem verificadas.
- * @returns {Object} - Objeto com o status de cada fila e da conexão.
- */
 async function getQueuesStatus(queueNames = []) {
   // Estabelece conexão com o canal do RabbitMQ
   const channel = await connectRabbitMQ();
@@ -76,3 +66,4 @@ async function getQueuesStatus(queueNames = []) {
 
 // Exporta a função para ser usada em outros arquivos
 module.exports = { getQueuesStatus };
+module.exports = { sendToQueue };
