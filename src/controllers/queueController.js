@@ -1,24 +1,47 @@
-const { getQueuesStatus } = require('../services/rabbitMQService');
+const { connectRabbitMQ } = require('../config/rabbitmq');
 
-// Defina aqui as filas que você quer monitorar
-const FILAS_MONITORADAS = [
-  'fila_exemplo',
-  'outra_fila_importante'
-];
+async function getQueuesStatus(queueNames = []) {
+  const channel = await connectRabbitMQ();
 
-async function queueStatus(req, res) {
-  try {
-    const status = await getQueuesStatus(FILAS_MONITORADAS);
-    return res.status(200).json(status);
-  } catch (error) {
-    console.error('Erro ao obter status das filas:', error);
-    return res.status(500).json({
-      success: false,
-      error: 'Falha ao obter status das filas',
-      rabbitMQStatus: 'disconnected',
-      timestamp: new Date().toISOString()
-    });
+  // Tratamento de erro do canal (evita que derrube o processo)
+  channel.on('error', (err) => {
+    console.error('Erro no canal RabbitMQ:', err.message);
+  });
+
+  const queueStatuses = [];
+
+  for (const name of queueNames) {
+    try {
+      const { messageCount, consumerCount } = await channel.checkQueue(name);
+
+      queueStatuses.push({
+        name,
+        messageCount,
+        consumerCount,
+        isActive: consumerCount > 0 || messageCount > 0
+      });
+    } catch (error) {
+      // Mesmo com erro, continua verificando outras filas
+      console.warn(`Erro ao verificar a fila '${name}':`, error.message);
+      queueStatuses.push({
+        name,
+        messageCount: 0,
+        consumerCount: 0,
+        isActive: false,
+        error: 'Fila não encontrada ou erro ao verificar'
+      });
+
+      // Aqui recria o canal para evitar canal quebrado
+      channel = await connectRabbitMQ();
+    }
   }
+
+  return {
+    success: true,
+    queues: queueStatuses,
+    rabbitMQStatus: 'connected',
+    timestamp: new Date().toISOString()
+  };
 }
 
-module.exports = { queueStatus };
+module.exports = { getQueuesStatus };
