@@ -235,9 +235,77 @@ O processamento da fila é feito de forma assíncrona por um consumer que utiliz
 npm test
 ```
 
+
+# 📡 API de Monitoramento de Filas RabbitMQ
+
+Este serviço expõe um endpoint HTTP para consultar o status de uma ou mais filas no RabbitMQ, utilizando o canal AMQP e (opcionalmente) a API de gerenciamento do RabbitMQ.
+
 ---
 
-## 📄 Licença
+## 🔍 Consulta de Status das Filas
 
-MIT © [Seu Nome]
+### 📥 Endpoint
 
+```bash
+GET /api/queues/status
+```
+
+### 🔧 Parâmetros de Query
+
+| Parâmetro | Descrição |
+|-----------|-----------|
+| `queues`  | (opcional) Lista separada por vírgulas com os nomes das filas a consultar. Use `queues=all` para retornar todas as filas disponíveis via API de gerenciamento do RabbitMQ. |
+
+---
+
+### ✅ Exemplos de Uso
+
+- Consultar filas específicas:
+
+```bash
+GET /api/queues/status?queues=mensagens,empresas
+```
+
+- Consultar todas as filas padrão (ex: fallback para `mensagens`):
+
+```bash
+GET /api/queues/status
+```
+
+- Consultar **todas as filas existentes** (usando plugin de gerenciamento do RabbitMQ):
+
+```bash
+GET /api/queues/status?queues=all
+```
+
+---
+
+### 📤 Exemplo de Resposta
+
+```json
+{
+  "success": true,
+  "queues": [
+    {
+      "name": "mensagens",
+      "messageCount": 2,
+      "consumerCount": 1,
+      "isActive": true
+    },
+    {
+      "name": "empresas",
+      "messageCount": 0,
+      "consumerCount": 0,
+      "isActive": false
+    }
+  ],
+  "rabbitMQStatus": "connected",
+  "timestamp": "2025-07-17T14:00:00.000Z"
+}
+```
+
+---
+
+✅ Requer que o plugin de gerenciamento do RabbitMQ esteja ativo para uso da opção `queues=all`.
+
+---
