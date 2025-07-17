@@ -40,16 +40,16 @@ A aplicação expõe uma **API REST** para envio de mensagens via WhatsApp, util
 ```bash
 projeto-bayles/
 ├── src/
-│   ├── controllers/         # Lógica dos endpoints REST
-│   ├── services/            # Integrações com Baileys e RabbitMQ
-│   ├── middleware/          # Validações, erros, rate limit
-│   ├── config/              # Conexões e variáveis de ambiente
-│   ├── utils/               # Helpers e logs
-│   └── app.js               # Inicialização do Express
-├── tests/                   # Testes unitários e de integração
-├── docker/                  # Arquivos Docker (opcional)
-├── docs/                    # Documentação da API
-├── .env.example             # Exemplo de variáveis de ambiente
+│   ├── controllers/      
+│   ├── services/             
+│   ├── middleware/          
+│   ├── config/         
+│   ├── utils/  
+│   └── app.js     
+├── tests/                 
+├── docker/           
+├── docs/      
+├── .env.example        
 ├── .gitignore
 ├── package.json
 └── README.md
@@ -79,7 +79,7 @@ cp .env.example .env
 nano .env
 ```
 
-Edite `.env` com suas configurações (RabbitMQ, WhatsApp etc).
+Edite `.env` com suas configurações.
 
 ### 4. Iniciar o projeto
 
@@ -109,8 +109,6 @@ docker-compose up --build
 ### 🔧 Passo a passo
 
 ```bash
-# Acesse sua VPS
-ssh usuario@ip-da-vps
 
 # Instale pacotes necessários
 sudo apt update && sudo apt install -y git curl build-essential
@@ -225,14 +223,6 @@ O processamento da fila é feito de forma assíncrona por um consumer que utiliz
   "queueName": "nome_da_fila",
   "timestamp": "2024-01-15T10:30:00Z"
 }
-```
-
----
-
-## 🤖 Testes
-
-```bash
-npm test
 ```
 
 # 📡 API de Monitoramento de Filas RabbitMQ
