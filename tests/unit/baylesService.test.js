@@ -1,6 +1,6 @@
 // Importa a função de envio de mensagens e a biblioteca Bayles
 const { sendMessage } = require('../../src/services/baylesService');
-const Bayles = require('bayles');
+const Bayles = require('../lib/bayles'); // ou './lib/bayles' dependendo da estrutura
 
 // Mocka a biblioteca Bayles para simular seu comportamento nos testes
 jest.mock('../../src/services/baylesService');
