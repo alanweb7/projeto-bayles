@@ -1,6 +1,8 @@
 // src/services/baylesService.js
 // Importa a biblioteca Bayles (cliente para RabbitMQ) e o logger personalizado
-const Bayles = require('bayles');
+// const Bayles = require('bayles');
+const Bayles = require('@whiskeysockets/baileys');
+
 const logger = require('../utils/logger');
 
 // Configuração do cliente Bayles com dados de conexão ao RabbitMQ

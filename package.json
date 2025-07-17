@@ -13,7 +13,6 @@
     "express",
     "rabbitmq",
     "baileys",
-    "bayles",
     "mensageria",
     "whatsapp",
     "microservices"
@@ -23,7 +22,6 @@
   "dependencies": {
     "express": "^4.18.0",
     "baileys": "^6.6.0",
-    "bayles": "^1.0.0",
     "amqplib": "^0.10.3",
     "cors": "^2.8.5",
     "helmet": "^6.0.0",
