@@ -1,49 +1,64 @@
-// Importa a função de envio de mensagens e a biblioteca Bayles
-const { sendMessage } = require('../../src/services/baylesService');
-// const Bayles = require('bayles');
-const Bayles = require('@whiskeysockets/baileys');
+// src/services/baileysService.js
+const { default: makeWASocket, useSingleFileAuthState, DisconnectReason } = require('@whiskeysockets/baileys');
+const { unlinkSync } = require('fs');
+const { Boom } = require('@hapi/boom');
+const path = require('path');
 
-// Mocka a biblioteca Bayles para simular seu comportamento nos testes
-// jest.mock('bayles');
+const logger = require('../utils/logger'); // Certifique-se de que esse logger exista
 
-describe('Bayles Service', () => {
-  // Limpa mocks antes de cada teste
-  beforeEach(() => {
-    Bayles.mockClear();
+const SESSION_FILE = path.resolve(__dirname, '../../session.json');
+const { state, saveState } = useSingleFileAuthState(SESSION_FILE);
+
+let sock;
+
+function startBaileys() {
+  sock = makeWASocket({
+    auth: state,
+    printQRInTerminal: true, // Mostra QR no terminal
   });
 
-  // Teste: envio bem-sucedido da mensagem
-  it('deve enviar uma mensagem com sucesso', async () => {
-    // Cria um mock para o método sendToQueue que simula sucesso
-    const mockSendToQueue = jest.fn().mockResolvedValue(true);
+  sock.ev.on('connection.update', ({ connection, lastDisconnect, qr }) => {
+    if (qr) {
+      logger.info('QR Code gerado, escaneie com o WhatsApp!');
+    }
 
-    // Mocka a instância da classe Bayles com o método simulado
-    Bayles.mockImplementation(() => ({
-      sendToQueue: mockSendToQueue,
-    }));
+    if (connection === 'close') {
+      const shouldReconnect = lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
-    // Chama a função que será testada
-    const result = await sendMessage('mensagens', { texto: 'olá' });
+      if (shouldReconnect) {
+        logger.warn('Conexão fechada, tentando reconectar...');
+        startBaileys();
+      } else {
+        logger.error('Desconectado permanentemente. Limpando sessão...');
+        try {
+          unlinkSync(SESSION_FILE);
+        } catch (e) {
+          logger.error('Erro ao remover sessão:', e);
+        }
+      }
+    }
 
-    // Verifica se o método foi chamado corretamente
-    expect(mockSendToQueue).toHaveBeenCalledWith('mensagens', { texto: 'olá' });
-
-    // Verifica se o retorno está correto
-    expect(result).toEqual({ success: true });
+    if (connection === 'open') {
+      logger.info('✅ Conectado ao WhatsApp com sucesso!');
+    }
   });
 
-  // Teste: falha no envio da mensagem
-  it('deve retornar erro ao falhar no envio', async () => {
-    // Mocka o método sendToQueue para simular uma falha
-    Bayles.mockImplementation(() => ({
-      sendToQueue: jest.fn().mockRejectedValue(new Error('Erro de envio')),
-    }));
+  sock.ev.on('creds.update', saveState);
+}
 
-    // Chama a função e espera a falha
-    const result = await sendMessage('mensagens', { texto: 'erro' });
+// Envia uma mensagem para um número
+async function sendMessage(jid, message) {
+  try {
+    if (!sock) throw new Error('Cliente Baileys não inicializado');
+    await sock.sendMessage(jid, message);
+    return { success: true };
+  } catch (error) {
+    logger.error('Erro ao enviar mensagem:', error);
+    return { success: false, error: error.message || error };
+  }
+}
 
-    // Verifica se o erro foi corretamente tratado
-    expect(result.success).toBe(false);
-    expect(result.error).toBe('Erro de envio');
-  });
-});
+module.exports = {
+  startBaileys,
+  sendMessage,
+};
