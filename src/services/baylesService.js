@@ -1,78 +1,74 @@
-// src/services/baylesService.js
-// Importa a biblioteca Bayles (cliente para RabbitMQ) e o logger personalizado
-// const Bayles = require('bayles');
-const Bayles = require('@whiskeysockets/baileys');
+// src/services/baileysService.js
+const {
+  default: makeWASocket,
+  useMultiFileAuthState,
+  DisconnectReason,
+  fetchLatestBaileysVersion
+} = require('@whiskeysockets/baileys');
 
 const logger = require('../utils/logger');
+const path = require('path');
+const fs = require('fs');
 
-// Configuração do cliente Bayles com dados de conexão ao RabbitMQ
-const baylesConfig = {
-  connection: {
-    hostname: process.env.RABBITMQ_HOST || 'localhost',
-    port: parseInt(process.env.RABBITMQ_PORT, 10) || 5672,
-    username: process.env.RABBITMQ_USER || 'guest',
-    password: process.env.RABBITMQ_PASS || 'guest',
-    vhost: process.env.RABBITMQ_VHOST || '/'
-  },
-  queues: {
-    defaultExchange: 'direct', // tipo de exchange
-    prefetch: 10,              // número máximo de mensagens simultâneas
-    durable: true              // mantém a fila mesmo após reinício do RabbitMQ
-  }
-};
+let sock = null;
 
-let baylesClient; // Variável global que armazenará o cliente Bayles
+const authFolder = path.resolve(__dirname, '../../auth');
 
-// Inicializa o cliente Bayles e define handlers de evento
-function initBaylesClient() {
+async function startBaileys() {
   try {
-    baylesClient = new Bayles(baylesConfig);
+    const { state, saveCreds } = await useMultiFileAuthState(authFolder);
+    const { version } = await fetchLatestBaileysVersion();
 
-    baylesClient.on('connected', () =>
-      logger.info('Bayles conectado ao RabbitMQ.')
-    );
+    sock = makeWASocket({
+      version,
+      auth: state,
+      printQRInTerminal: true, // Mostra o QR diretamente no terminal
+    });
 
-    baylesClient.on('error', (err) =>
-      logger.error('Erro no Bayles:', err)
-    );
+    sock.ev.on('connection.update', async (update) => {
+      const { connection, lastDisconnect } = update;
 
-    baylesClient.on('disconnected', () =>
-      logger.warn('Bayles desconectado do RabbitMQ.')
-    );
-  } catch (error) {
-    logger.error('Erro ao inicializar o cliente Bayles:', error);
-    throw error;
+      if (connection === 'close') {
+        const shouldReconnect = (lastDisconnect?.error)?.output?.statusCode !== DisconnectReason.loggedOut;
+        logger.warn('Conexão encerrada com o WhatsApp');
+
+        if (shouldReconnect) {
+          logger.info('Tentando reconectar...');
+          startBaileys();
+        } else {
+          logger.error('Sessão expirada. Deletando credenciais...');
+          fs.rmSync(authFolder, { recursive: true, force: true });
+        }
+      }
+
+      if (connection === 'open') {
+        logger.info('✅ Conectado ao WhatsApp com sucesso!');
+      }
+    });
+
+    sock.ev.on('creds.update', saveCreds);
+  } catch (err) {
+    logger.error('Erro ao iniciar o Baileys:', err);
   }
 }
 
-// Envia uma mensagem para uma fila RabbitMQ usando o Bayles
-async function sendMessage(queue, message) {
-  // Garante que o cliente esteja inicializado
-  if (!baylesClient) {
-    logger.warn('Bayles não estava inicializado. Inicializando...');
-    initBaylesClient();
+async function sendMessage(jid, text) {
+  if (!sock) {
+    logger.warn('Socket não iniciado. Iniciando agora...');
+    await startBaileys();
   }
 
   try {
-    await baylesClient.sendToQueue(queue, message); // Envia para a fila
-    logger.info({
-      event: 'MensagemEnviada',
-      fila: queue,
-      conteudo: message
-    });
+    await sock.sendMessage(jid, { text });
+    logger.info(`Mensagem enviada para ${jid}: "${text}"`);
+    return { success: true };
   } catch (error) {
-    logger.error({
-      event: 'ErroEnvioMensagem',
-      fila: queue,
-      conteudo: message,
-      erro: error.message || error
-    });
-    throw error;
+    logger.error(`Erro ao enviar mensagem: ${error.message}`);
+    return { success: false, error: error.message };
   }
 }
 
-// Exporta as funções para uso externo
 module.exports = {
-  initBaylesClient,
+  startBaileys,
   sendMessage
 };
