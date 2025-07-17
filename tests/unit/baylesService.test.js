@@ -1,28 +1,21 @@
-// tests/unit/baylesService.test.js
+const { Connection } = require('../../src/services/baylesService');
+const makeWaSocket = require('@whiskeysockets/baileys').default;
 
-const { sendMessage, startBaileys } = require('../../src/services/baylesService');
-
-jest.mock('@whiskeysockets/baileys', () => ({
-  useMultiFileAuthState: jest.fn(() => ({
-    state: {},
-    saveCreds: jest.fn()
-  })),
-  fetchLatestBaileysVersion: jest.fn(() => ({
-    version: [2, 2323, 4],
-    isLatest: true
-  })),
-  makeWASocket: jest.fn(() => ({
-    ev: {
-      on: jest.fn(),
-    },
-    waitForConnectionUpdate: jest.fn(),
-    ws: { close: jest.fn() },
-    sendMessage: jest.fn(),
-  }))
-}));
+jest.mock('@whiskeysockets/baileys', () => {
+  return {
+    __esModule: true,
+    default: jest.fn(), // mockando makeWaSocket como função
+  };
+});
 
 describe('Baileys Service', () => {
-  it('deve iniciar sem lançar erro', () => {
-    expect(() => startBaileys()).not.toThrow();
+  it('deve iniciar sem lançar erro', async () => {
+    const fakeSocket = { user: { id: '1234' } };
+    makeWaSocket.mockReturnValue(fakeSocket);
+
+    const sock = await Connection();
+
+    expect(sock).toBe(fakeSocket);
+    expect(makeWaSocket).toHaveBeenCalledTimes(1);
   });
 });
