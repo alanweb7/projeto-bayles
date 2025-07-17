@@ -265,7 +265,7 @@ GET /api/queues/status
 GET /api/queues/status?queues=mensagens,empresas
 ```
 
-- Consultar **todas as filas existentes** (usando plugin de gerenciamento do RabbitMQ):
+- Consultar **todas as filas existentes**:
 
 ```bash
 GET /api/queues/status
