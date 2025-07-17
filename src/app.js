@@ -52,6 +52,7 @@ const { receiveMessages } = require('./controllers/messageReceiverController');
 app.get('/api/messages/receive/:queueName', receiveMessages);
 
 
+
 // Inicia o servidor e exibe mensagem no console
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

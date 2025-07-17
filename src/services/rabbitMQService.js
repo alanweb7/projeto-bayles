@@ -7,7 +7,6 @@
 // Importa a função que conecta ao RabbitMQ a partir do módulo de configuração
 const { connectRabbitMQ } = require('../config/rabbitmq');
 
-
 // Função assíncrona que envia uma mensagem para uma fila específica do RabbitMQ
 async function sendToQueue(queue, message) {
   try {
@@ -34,3 +33,53 @@ async function sendToQueue(queue, message) {
 
 // Exporta a função `sendToQueue` para ser utilizada em outras partes do sistema
 module.exports = { sendToQueue };
+
+
+/**
+ * Função que retorna o status de várias filas do RabbitMQ.
+ * @param {Array} queueNames - Lista com os nomes das filas a serem verificadas.
+ * @returns {Object} - Objeto com o status de cada fila e da conexão.
+ */
+async function getQueuesStatus(queueNames = []) {
+  // Estabelece conexão com o canal do RabbitMQ
+  const channel = await connectRabbitMQ();
+
+  // Array para armazenar o status de cada fila
+  const queueStatuses = [];
+
+  // Percorre cada nome de fila informado
+  for (const name of queueNames) {
+    try {
+      // Usa checkQueue para obter informações da fila (como mensagens e consumidores)
+      const { messageCount, consumerCount } = await channel.checkQueue(name);
+
+      // Adiciona o status da fila ao array
+      queueStatuses.push({
+        name,
+        messageCount,
+        consumerCount,
+        isActive: consumerCount > 0 || messageCount > 0 // Fila ativa se tiver mensagens ou consumidores
+      });
+    } catch (error) {
+      // Em caso de erro (por exemplo, fila inexistente), adiciona um status padrão
+      queueStatuses.push({
+        name,
+        messageCount: 0,
+        consumerCount: 0,
+        isActive: false,
+        error: 'Fila não encontrada ou erro ao verificar'
+      });
+    }
+  }
+
+  // Retorna o resultado final contendo os status das filas, status do RabbitMQ e timestamp
+  return {
+    success: true,
+    queues: queueStatuses,
+    rabbitMQStatus: 'connected',
+    timestamp: new Date().toISOString()
+  };
+}
+
+// Exporta a função para ser usada em outros arquivos
+module.exports = { getQueuesStatus };
