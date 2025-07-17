@@ -35,75 +35,12 @@ A aplicação expõe uma **API REST** para envio de mensagens via WhatsApp, util
 
 ---
 
-## 📂 Estrutura do Projeto
-
-```bash
-projeto-bayles/
-├── src/
-│   ├── controllers/      
-│   ├── services/             
-│   ├── middleware/          
-│   ├── config/         
-│   ├── utils/  
-│   └── app.js     
-├── tests/                 
-├── docker/           
-├── docs/      
-├── .env.example        
-├── .gitignore
-├── package.json
-└── README.md
-```
-
----
-
-## 🚀 Instalação Local
-
-### 1. Clonar o projeto
-
-```bash
-git clone https://github.com/seu-usuario/projeto-bayles.git
-cd projeto-bayles
-```
-
-### 2. Instalar dependências
-
-```bash
-npm install
-```
-
-### 3. Configurar variáveis de ambiente
-
-```bash
-cp .env.example .env
-nano .env
-```
-
-Edite `.env` com suas configurações.
-
-### 4. Iniciar o projeto
-
-```bash
-npm start
-```
-
----
-
-## 🐳 Executando com Docker (opcional)
-
-```bash
-cd docker
-docker-compose up --build
-```
-
----
-
 ## 💻 Instalação em uma VPS (Ubuntu 20.04+)
 
 ### ✅ Pré-requisitos
 
 - Node.js 16+
-- RabbitMQ instalado (ou Docker)
+- RabbitMQ instalado (Docker)
 - Git
 
 ### 🔧 Passo a passo
@@ -296,4 +233,25 @@ GET /api/queues/status
   "rabbitMQStatus": "connected",
   "timestamp": "2025-07-17T14:00:00.000Z"
 }
+```
+---
+
+## 📂 Estrutura do Projeto
+
+```bash
+projeto-bayles/
+├── src/
+│   ├── controllers/      
+│   ├── services/             
+│   ├── middleware/          
+│   ├── config/         
+│   ├── utils/  
+│   └── app.js     
+├── tests/                 
+├── docker/           
+├── docs/      
+├── .env.example        
+├── .gitignore
+├── package.json
+└── README.md
 ```
