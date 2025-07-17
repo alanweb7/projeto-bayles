@@ -3,7 +3,7 @@ const { sendMessage } = require('../../src/services/baylesService');
 const Bayles = require('bayles');
 
 // Mocka a biblioteca Bayles para simular seu comportamento nos testes
-jest.mock('bayles');
+jest.mock('../../src/services/baylesService');
 
 describe('Bayles Service', () => {
   // Limpa mocks antes de cada teste
