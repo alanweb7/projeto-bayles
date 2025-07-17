@@ -76,6 +76,7 @@ npm install
 
 ```bash
 cp .env.example .env
+nano .env
 ```
 
 Edite `.env` com suas configurações (RabbitMQ, WhatsApp etc).
