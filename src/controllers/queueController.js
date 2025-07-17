@@ -2,15 +2,16 @@
 const { connectRabbitMQ } = require('../config/rabbitmq');
 const axios = require('axios');
 
+
 async function listAllQueues() {
   const {
     RABBITMQ_HOST,
-    RABBITMQ_PORT,
+    RABBITMQ_PORT_MANAGEMENT, // Adicione uma variável separada para a porta HTTP!
     RABBITMQ_USER,
     RABBITMQ_PASS
   } = process.env;
 
-  const managementUrl = `http://${RABBITMQ_HOST}:${RABBITMQ_PORT}/api/queues`;
+  const managementUrl = `http://${RABBITMQ_HOST}:${RABBITMQ_PORT_MANAGEMENT}/api/queues`;
 
   try {
     const response = await axios.get(managementUrl, {
@@ -20,7 +21,7 @@ async function listAllQueues() {
       }
     });
 
-    return response.data.map(q => q.name);
+    return response.data.map((q) => q.name);
   } catch (error) {
     console.error('Erro ao buscar todas as filas via Management Plugin:', error.message);
     throw error;
