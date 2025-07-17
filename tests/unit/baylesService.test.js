@@ -21,8 +21,6 @@ jest.mock('@whiskeysockets/baileys', () => ({
   }))
 }));
 
-
-
 describe('Baileys Service', () => {
   it('deve iniciar sem lançar erro', () => {
     expect(() => startBaileys()).not.toThrow();
