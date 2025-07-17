@@ -54,7 +54,7 @@ sudo apt install -y nodejs
 reboot now
 
 ```
-## Instalando Docker no Ubuntu (via apt)
+## Instalando Docker no Ubuntu
 
 ```bash
 sudo apt update && \
@@ -69,22 +69,16 @@ sudo systemctl start docker
 docker --version
 ```
 
-## Execute o comando para rodar o RabbitMQ com management:
+## Rodando o RabbitMQ com management:
 
 ```bash
-# sudo apt install -y rabbitmq-server
-# sudo systemctl enable rabbitmq-server
-# sudo systemctl start rabbitmq-server
-# rabbitmq-plugins enable rabbitmq_management
-# sudo systemctl restart rabbitmq-servergit
 docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 
 ```
 ---
 
-# 📦 Instalar Redis
+## 📦 Instalar Redis
 ```bash
-# Instale o cliente Redis para Node.js
 npm install redis && \
 sudo apt install -y redis-tools redis-server && \
 sudo systemctl start redis-server && \
@@ -95,12 +89,12 @@ sudo systemctl enable redis-server
 ## Verifique se o Redis está funcionando
 ```bash
 redis-cli ping
-# Esperado: PONG
  ```
+ * Esperado: PONG
 
 ---
 
-# 📦 📦 Clone o projeto
+## 📦 📦 Clone e configure o projeto
 ```bash
 git clone https://github.com/alanweb7/projeto-bayles.git
 cd projeto-bayles
@@ -129,6 +123,8 @@ pm2 startup
 
 ---
 
+# 📩 Exemplos de uso
+
 ## 📩 API: Enviar Mensagens
 
 ### ➔ Rota
@@ -140,7 +136,7 @@ POST /api/messages/send
 ### 📄 Descrição
 
 Recebe mensagens via HTTP e envia para uma fila RabbitMQ.\
-O processamento da fila é feito de forma assíncrona por um consumer que utiliza **Baileys** para enviar via WhatsApp.
+O processamento da fila é feito de forma assíncrona por um consumer e poderá utilizar **Baileys** para enviar via WhatsApp.
 
 ---
 
