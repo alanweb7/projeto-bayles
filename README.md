@@ -121,6 +121,8 @@ sudo apt install -y nodejs
 sudo apt install -y rabbitmq-server
 sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
+rabbitmq-plugins enable rabbitmq_management
+sudo systemctl restart rabbitmq-server
 
 # 📦 Instalar Redis (caso local)
 # Instale o cliente Redis para Node.js
