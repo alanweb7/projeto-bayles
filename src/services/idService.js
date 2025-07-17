@@ -6,7 +6,8 @@
  */
 
 // Importa a instância do Redis configurada no arquivo ../config/redis
-const redis = require('../config/redis');
+// const redis = require('../config/redis');
+const database = require('../config/database');
 
 // Define o tempo de expiração dos IDs armazenados (24 horas em segundos)
 const ID_EXPIRATION_SECONDS = 60 * 60 * 24; // 24 horas
@@ -14,7 +15,7 @@ const ID_EXPIRATION_SECONDS = 60 * 60 * 24; // 24 horas
 // Função para verificar se um ID é único (ainda não foi usado)
 async function isUniqueId(id) {
   // Verifica se a chave msgid:{id} já existe no Redis
-  const exists = await redis.exists(`msgid:${id}`);
+  const exists = await database.exists(`msgid:${id}`);
   // Retorna true se o ID ainda não existe (é único), false caso contrário
   return !exists;
 }
@@ -22,7 +23,7 @@ async function isUniqueId(id) {
 // Função para marcar um ID como usado no Redis
 async function markIdAsUsed(id) {
   // Armazena a chave msgid:{id} com valor '1' e define a expiração para 24 horas
-  await redis.setEx(`msgid:${id}`, ID_EXPIRATION_SECONDS, '1');
+  await database.setEx(`msgid:${id}`, ID_EXPIRATION_SECONDS, '1');
 }
 
 // Exporta as duas funções para serem usadas em outras partes da aplicação
