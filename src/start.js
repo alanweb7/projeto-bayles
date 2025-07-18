@@ -2,6 +2,8 @@ const { makeWASocket, useMultiFileAuthState, DisconnectReason } = require('@whis
 const qrcode = require('qrcode-terminal');
 const P = require('pino');
 
+const logger = require('./utils/logger');
+
 async function startBaileys() {
   const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys');
 
