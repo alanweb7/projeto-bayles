@@ -1,5 +1,5 @@
 {
-  "name": "projeto-baileys",
+  "name": "projeto-bayles",
   "version": "1.0.0",
   "description": "Gateway de mensagens assíncronas usando Node.js, Baileys e RabbitMQ",
   "main": "src/app.js",
