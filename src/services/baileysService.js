@@ -19,7 +19,6 @@ const connectBaileys = async () => {
   });
 
   sock.ev.on('messages.upsert', ({ messages, type }) => {
-    logger.info(`📩 Mensagem de ${from}: ${body}`);
     if (type === 'notify') {
       messages.forEach((msg) => {
         const from = msg.key.remoteJid;

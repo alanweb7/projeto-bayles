@@ -11,6 +11,19 @@ async function startBaileys() {
     logger: P({ level: 'silent' }) // menos poluição no terminal
   });
 
+
+  sock.ev.on('messages.upsert', ({ messages, type }) => {
+    logger.info(`📩 Mensagem de ${from}: ${body}`);
+    if (type === 'notify') {
+      messages.forEach((msg) => {
+        const from = msg.key.remoteJid;
+        const body = msg.message?.conversation || msg.message?.extendedTextMessage?.text;
+
+        logger.info(`📩 Mensagem de ${from}: ${body}`);
+      });
+    }
+  });
+
   // Exibe QR Code quando necessário
   sock.ev.on('connection.update', (update) => {
     const { connection, qr } = update;
@@ -18,9 +31,9 @@ async function startBaileys() {
       console.log('📱 Escaneie o QR Code com o WhatsApp:');
       qrcode.generate(qr, { small: true });
     }
- 
+
     if (connection === 'open') {
-      console.log('✅ Conectado ao WhatsApp com sucesso!');
+      console.log('✅ Conectado ao WhatsApp com sucesso!!');
     }
 
     if (connection === 'close') {
