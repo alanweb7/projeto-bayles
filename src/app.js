@@ -1,11 +1,9 @@
 /**
  * Configura seu servidor Node.js com 
- * Express e define uma única rota POST que:
- * Valida a mensagem;
- * Envia para a fila via RabbitMQ (controlador sendMessage);
+ * Express e definição de rotas
  */
 
-// Carrega variáveis de ambiente do arquivo .env para process.env
+// Carrega variáveis de ambiente do arquivo .env
 require('dotenv').config();
 
 const express = require('express');
@@ -14,7 +12,7 @@ const helmet = require('helmet');
 
 const { validateMessage } = require('./middleware/validation');
 const { sendMessage, receiveMessages } = require('./controllers/messageController');
-const { queueStatus } = require('./controllers/queueController'); // <- verifique se está exportando certo!
+const { queueStatus } = require('./controllers/queueController');
 
 const app = express();
 
@@ -31,3 +29,4 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+offi
